@@ -1,0 +1,15 @@
+{
+  "name": "indienote",
+  "version": "1.0.0",
+  "description": "my notes that can package all data and sync everywhere",
+  "main": "index.js",
+  "scripts": {
+    "test": "npm test"
+  },
+  "author": "jack",
+  "license": "ISC",
+  "dependencies": {
+    "electron": "^4.0.1",
+    "vue": "^2.5.22"
+  }
+}
