@@ -180,9 +180,9 @@ class DB {
         })
     }
 
-    searchbyword (word, callback) {
+    searchByWord (word, callback) {
 
     }
 }
 
-module.exports.DB = DB
+module.exports = DB

@@ -1,3 +1,7 @@
 /node_modules
+/dist
+/logs
+/www
+
 /test/*
 !/test/*.js

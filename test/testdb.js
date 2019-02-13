@@ -1,6 +1,6 @@
 const fs = require('fs')
 const expect = require('chai').expect
-var DB = require('../server/db.js').DB
+var DB = require('../server/db.js')
 
 describe('test db metafile manipulation', () => {
 
@@ -8,7 +8,8 @@ describe('test db metafile manipulation', () => {
     let testmetapath = './test/metadata'
     let testfiledir = './test/'
     let test_filename = '1549252849'
-    let test_data = JSON.stringify({a: 'abcdefg', b: 'abcdefghijklmn'})
+    let test_json = {a: 'abcdefg', b: 'ab"aefwdc"cde<a>fgh</a><p>grksselhrrgf</p>ijklmn'}
+    let test_data = JSON.stringify(test_json)
 
     before((done) => {
         let p1 = new Promise((resolve, reject) => {
@@ -106,7 +107,7 @@ describe('test db metafile manipulation', () => {
             if (err) console.log(err)
             expect(err).be.null
             let data_back = JSON.parse(data)
-            expect(data_back.a).equal('abcdefg')
+            expect(data_back.a).equal(test_json.a)
             done()
         })
     })

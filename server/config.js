@@ -1,8 +1,8 @@
 var config = {
-    metadir: './',
+    metadir: './test/',
     metaname: 'metadata',
     encoding: 'utf8',
-    filedir: './'
+    filedir: './test/'
 }
 
 module.exports.config = config

@@ -4,19 +4,27 @@
   "description": "my notes that can package all data and sync everywhere",
   "main": "index.js",
   "scripts": {
-    "test": "mocha --recursive --full-trace --exit"
+    "start": "electron .",
+    "test": "mocha test --recursive --full-trace --exit",
+    "dist": "electron-builder",
+    "build": "cd web & npm run build",
+    "dev": "cd web & npm start"
   },
   "author": "jack",
   "license": "ISC",
   "dependencies": {
-    "electron": "^4.0.1",
-    "vue": "^2.5.22"
-  },
-  "directories": {
-    "test": "test"
+    "log4js": "^4.0.2"
   },
   "devDependencies": {
     "chai": "^4.2.0",
+    "electron": "^4.0.4",
+    "electron-builder": "^20.38.5",
     "mocha": "^5.2.0"
+  },
+  "build": {
+    "appId": "some-id-jack-chen-myNote",
+    "mac": {
+      "category": "productivity"
+    }
   }
 }
