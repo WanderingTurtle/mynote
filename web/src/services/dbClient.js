@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import { EventBus } from './eventBus.js'
-const ipcRenderer = window.require('electron').ipcRenderer
+const { ipcRenderer } = window.require('electron')
+const TESTINGWEB = false
 
 export const DBClient = new Vue({
   data: function(){
@@ -19,9 +20,9 @@ export const DBClient = new Vue({
       // Use $once to monitor events to save memory usage? (potentially?)
       if (event_id) {
         if (funcName === 'Error') {
-          EventBus.$emit(event_id, {Error: false, data: data})
-        } else {
           EventBus.$emit(event_id, {Error: true, data: data})
+        } else {
+          EventBus.$emit(event_id, {Error: false, data: data})
         }
       }
       if (funcName === 'Error') {
@@ -74,6 +75,7 @@ export const DBClient = new Vue({
 })
 
 function send(funcName, event_id, args) {
+  if (TESTINGWEB) return
   if (!args) args = []
   ipcRenderer.send('DB', funcName, event_id, args)
 }
