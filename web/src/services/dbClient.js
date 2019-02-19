@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import { EventBus } from './eventBus.js'
 const { ipcRenderer } = window.require('electron')
-const TESTINGWEB = false
 
 export const DBClient = new Vue({
   data: function(){
@@ -75,7 +74,6 @@ export const DBClient = new Vue({
 })
 
 function send(funcName, event_id, args) {
-  if (TESTINGWEB) return
   if (!args) args = []
   ipcRenderer.send('DB', funcName, event_id, args)
 }

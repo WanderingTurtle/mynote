@@ -1,7 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MainFrame from '@/components/MainFrame'
-import SideBar from '@/components/SideBar'
+import SideBar from '@/components/sidebar/SideBar'
 import MenuBar from '@/components/MenuBar'
 
 Vue.use(Router)
@@ -14,12 +14,12 @@ export default new Router({
       component: MainFrame
     },
     {
-      path: 'side',
+      path: '/side',
       name: 'SideBar',
       component: SideBar
     },
     {
-      path: 'menu',
+      path: '/menu',
       name: 'MenuBar',
       component: MenuBar
     }
