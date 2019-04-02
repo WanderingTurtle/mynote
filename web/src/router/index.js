@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import MainFrame from '@/components/MainFrame'
-import SideBar from '@/components/sidebar/SideBar'
+import SideBar from '@/components/SideBar'
 import MenuBar from '@/components/MenuBar'
+import TextRegion from '@/components/TextRegion'
 
 Vue.use(Router)
 
@@ -22,6 +23,11 @@ export default new Router({
       path: '/menu',
       name: 'MenuBar',
       component: MenuBar
+    },
+    {
+      path: '/text',
+      name: 'TextRegion',
+      component: TextRegion
     }
   ]
 })
