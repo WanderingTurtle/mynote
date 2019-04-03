@@ -35,7 +35,7 @@
             </div>
           </div>
           <div class="page-footer">
-            <el-tooltip content="加文档" effect="light" hide-after="3000">
+            <el-tooltip content="加文档" effect="light" :hide-after="3000">
               <el-button class="button" icon="el-icon-plus" circle></el-button>
             </el-tooltip>
           </div>
@@ -91,7 +91,7 @@
             </div>
           </div>
           <div class="page-footer">
-            <el-tooltip content="加文档" effect="light" hide-after="3000">
+            <el-tooltip content="加文档" effect="light" :hide-after="3000">
               <el-button class="button" icon="el-icon-plus" circle></el-button>
             </el-tooltip>
           </div>

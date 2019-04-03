@@ -1,35 +1,62 @@
 <template>
   <div class="container-wrap">
     <div class="container">
-      <div class="header">edit tools</div>
-      <div class="header">tabs</div>
-      <div class="main">
-        <div class="title">
-          <div class="title-text" contenteditable="true">title</div>
-          <div class="title-date">创建于：2019年4月2日12点</div>
-          <div class="title-tags">
-            <el-tag
-              :key="tag"
-              v-for="tag in dynamicTags"
-              closable
-              :disable-transitions="false"
-              @close="handleClose(tag)">
-              {{tag}}
-            </el-tag>
-            <el-input
-              class="input-new-tag"
-              v-if="inputVisible"
-              v-model="inputValue"
-              ref="saveTagInput"
-              size="small"
-              @keyup.enter.native="handleInputConfirm"
-              @blur="handleInputConfirm"
-            >
-            </el-input>
-            <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+      <div class="header">
+        <div class="toolbox space-between">
+          <div class="toolbox selftool">
+            <div class="toolbox-item">加粗</div>
+            <div class="toolbox-item">下划</div>
+            <div class="toolbox-item" @click="handleTabsEdit(null, 'add')">加页面</div>
+            <el-color-picker v-model="fontColor"></el-color-picker>
+          </div>
+          <div class="toolbox systool align-right">
+            <el-tooltip content="打开设置页" :hide-after="3000" placement="left" effect="light">
+              <div class="toolbox-item"><i class="el-icon-setting"></i></div>
+            </el-tooltip>
           </div>
         </div>
-        <div class="main text-region" contenteditable="true">content</div>
+      </div>
+      <div class="main">
+        <el-tabs v-model="editableTabsValue" type="card" closable @edit="handleTabsEdit">
+          <el-tab-pane
+            :key="doc.name"
+            v-for="(doc) in editableTabs"
+            :label="doc.title"
+            :name="doc.name"
+          >
+            <div class="title">
+              <div 
+                class="title-text" 
+                contenteditable="true" 
+                v-text="doc.title"
+                @input="doc.title=$event.target.innerHTML">
+                {{doc.title}}
+              </div>
+              <div class="title-date">创建于：{{doc.create_date}}</div>
+              <div class="title-tags">
+                <el-tag
+                  :key="tag"
+                  v-for="tag in doc.tags"
+                  closable
+                  :disable-transitions="false"
+                  @close="handleClose(doc.tags, tag)">
+                  {{tag}}
+                </el-tag>
+                <el-input
+                  class="input-new-tag"
+                  v-if="inputVisible"
+                  v-model="inputValue"
+                  size="small"
+                  @keyup.enter.native="handleInputConfirm(doc.tags)"
+                  @blur="handleInputConfirm(doc.tags)"
+                >
+                </el-input>
+                <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+              </div>
+            </div>
+            <div class="main text-region" contenteditable="true">content</div>
+          </el-tab-pane>
+        </el-tabs>
       </div>
     </div>
   </div>
@@ -39,30 +66,67 @@
 export default {
   data() {
     return {
-      dynamicTags: ['标签一', '标签二', '标签三'],
       inputVisible: false,
-      inputValue: ''
+      inputValue: '',
+      fontColor: '#409EFF',
+      editableTabsValue: '1',
+      tabIndex: 1,
+      editableTabs: [
+        {
+          title: 'abcdefg',
+          create_date: new Date(),
+          tags: ['标签一', '标签二', '标签三'],
+          content: "hello",
+          name: '1',
+        }
+      ]
     };
   },
   methods: {
-    handleClose(tag) {
-      this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
+    handleClose(tags, tag) {
+      tags.splice(tags.indexOf(tag), 1);
     },
-
     showInput() {
       this.inputVisible = true;
-      this.$nextTick(_ => {
-        this.$refs.saveTagInput.$refs.input.focus();
-      });
     },
-
-    handleInputConfirm() {
+    handleInputConfirm(tags) {
       let inputValue = this.inputValue;
       if (inputValue) {
-        this.dynamicTags.push(inputValue);
+        tags.push(inputValue);
       }
       this.inputVisible = false;
       this.inputValue = '';
+    },
+    handleTabsEdit(targetName, action) {
+      if (action === 'add') {
+        let newTabName = ++this.tabIndex + '';
+        this.editableTabs.push({
+          title: 'New Tab',
+          name: newTabName,
+          content: '',
+          tags: [],
+          create_date: new Date()
+        });
+        this.editableTabsValue = newTabName;
+      }
+      if (action === 'remove') {
+        console.log('remove')
+        let tabs = this.editableTabs;
+        let activeName = this.editableTabsValue;
+        if (activeName === targetName) {
+          tabs.forEach((tab, index) => {
+            if (tab.name === targetName) {
+              let nextTab = tabs[index + 1] || tabs[index - 1];
+              if (nextTab) {
+                activeName = nextTab.name;
+              }
+            }
+          });
+        }
+        
+        this.editableTabsValue = activeName;
+        this.editableTabs = tabs.filter(tab => tab.name !== targetName);
+      }
     }
   }
 }
@@ -147,5 +211,41 @@ export default {
   .text-region {
     outline: none;
     padding: 25px 20px 20px 20px;
+  }
+
+  .toolbox {
+    height: 100%;
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    user-select: none;
+  }
+
+  .toolbox-item {
+    flex: 0 0;
+    white-space: nowrap;
+    padding: 8px;
+    border-style: solid;
+    border-color: rgb(241, 241, 241);
+    border-width: 1px;
+  }
+
+  .toolbox-item:hover {
+    background-color: rgb(241, 241, 241);
+    cursor: pointer;
+  }
+
+  .space-between {
+    justify-content: space-between;
+  }
+
+  .selftool {
+    flex: 1 0;
+  }
+
+  .systool {
+    flex: 0 0;
+    flex-direction: row-reverse;
   }
 </style>
