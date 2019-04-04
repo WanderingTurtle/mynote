@@ -1,9 +1,11 @@
 <template>
-  <el-row>
-    <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple"></div></el-col>
-    <el-col :span="6"><div class="grid-content bg-purple-light"></div></el-col>
-  </el-row>
+  <div class="container-wrap">
+    <div class="container">
+      <div class="main">
+
+      </div>
+    </div>
+  </div>
 </template>
 
 <script>
@@ -19,20 +21,33 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-  .el-col {
-    border-radius: 4px;
+  .container-wrap {
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
   }
-  .bg-purple-dark {
-    background: #99a9bf;
+
+  .container {
+    display: flex;
+    height: 100%;
+    flex-direction: column;
+    overflow: hidden;
   }
-  .bg-purple {
-    background: #d3dce6;
+
+  .main {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: row;
+    overflow: hidden;
   }
-  .bg-purple-light {
-    background: #e5e9f2;
+
+  .side {
+    flex: 0 0;
   }
-  .grid-content {
-    border-radius: 4px;
-    min-height: 36px;
+
+  .separate-line:hover {
+    cursor: ew-resize;
   }
 </style>

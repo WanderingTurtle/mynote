@@ -41,7 +41,7 @@
           </div>
         </div>
         <div class="separate-line" @mousedown="changePageWidth($event, 'down')">
-
+          <!--TODO 磁力鼠标-->
         </div>
         <div class="page page-right" :class="{pause: this.dragging}">
           <!--need justify-->
@@ -302,7 +302,7 @@
     white-space: nowrap;
     overflow-x: hidden;
     overflow-y: visible;
-    border-width: 3.5px 0px 3.5px 0px;
+    border-width: 2px 0px 2px 0px;
     border-style: solid;
     border-color: white;
     border-top-color: rgb(231, 231, 231);
@@ -330,7 +330,7 @@
   }
 
   .separate-line {
-    width: 3.5px;
+    width: 2px;
     background-color:rgb(231, 231, 231);
     height: 100%;
     flex-shrink: 0;
@@ -356,7 +356,7 @@
 
   .list-item {
     width: inherit;
-    padding: 10px 5px 10px 5px;
+    padding: 10px 8px 10px 8px;
     flex-grow: 0;
     flex-shrink: 0;
     display: flex;
